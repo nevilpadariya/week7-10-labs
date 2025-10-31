@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Zoom enabled -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Accessible Demo (Fixed)</title>
+  <link rel="stylesheet" href="styles_fixed.css">
+</head>
+<body>
+  <h1>Welcome to Our Site</h1>
+
+  <p>Our mission is to make the web accessible to everyone.</p>
+
+  <button class="cta">Get Started</button>
+
+  <p>Status: <span class="status status-ok" aria-label="Status OK">✓ OK</span></p>
+  <p><a href="#signup" class="descriptive-link">Create your account</a> to learn more.</p>
+
+  <img src="https://picsum.photos/300/120" class="hero-image" alt="Abstract scenic placeholder image">
+
+  <nav class="roomy-nav" aria-label="Primary">
+    <a href="#home">Home</a>
+    <a href="#features">Features</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <form id="signup" class="signup" aria-labelledby="signup-title">
+    <h2 id="signup-title">Sign Up</h2>
+
+    <label for="email">Email</label>
+    <input id="email" type="email" autocomplete="email" required>
+
+    <label for="phone">Phone Number</label>
+    <input id="phone" type="tel" inputmode="numeric" autocomplete="tel">
+
+    <label for="password">Password</label>
+    <input id="password" type="password" autocomplete="new-password" aria-describedby="pw-help" required>
+    <div id="pw-help" class="hint">At least 8 characters, include a number.</div>
+
+    <button type="submit">Create Account</button>
+  </form>
+
+  <button id="openModal">Open Modal</button>
+
+  <div id="modal" aria-hidden="true" class="modal" hidden role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-content" tabindex="-1">
+      <h2 id="modal-title">Modal Title</h2>
+      <p>Now with ESC to close, focus trap, and return focus.</p>
+      <button id="closeModal" class="close-x" aria-label="Close dialog">✕</button>
+      <a href="#nowhere">Another link</a>
+      <input type="text" placeholder="Type here">
+    </div>
+  </div>
+
+  <div class="cards">
+    <a href="#c1" class="card">Card 1</a>
+    <a href="#c2" class="card">Card 2</a>
+    <a href="#c3" class="card">Card 3</a>
+  </div>
+
+  <div class="carousel" aria-roledescription="carousel" aria-label="Promo carousel">
+    <div class="controls">
+      <button id="prev">Previous</button>
+      <button id="toggle">Pause</button>
+      <button id="next">Next</button>
+    </div>
+    <div class="track">
+      <div class="slide" aria-roledescription="slide" aria-label="1 of 3">Slide 1 – Big Sale!</div>
+      <div class="slide" aria-roledescription="slide" aria-label="2 of 3">Slide 2 – New Arrivals!</div>
+      <div class="slide" aria-roledescription="slide" aria-label="3 of 3">Slide 3 – Limited Offer!</div>
+    </div>
+  </div>
+
+  <script>
+    // Visible focus
+    document.body.addEventListener('keydown', e => {
+      if (e.key === 'Tab') document.body.classList.add('show-focus');
+    });
+
+    // Modal: basic focus trap + ESC + restore focus
+    const openBtn = document.getElementById('openModal');
+    const modal = document.getElementById('modal');
+    const closeBtn = document.getElementById('closeModal');
+    const content = modal.querySelector('.modal-content');
+    let lastFocus = null;
+
+    const focusableSel = 'a, button, input, [tabindex]:not([tabindex="-1"])';
+    function trapFocus(e) {
+      const nodes = content.querySelectorAll(focusableSel);
+      const first = nodes[0], last = nodes[nodes.length-1];
+      if (e.key === 'Tab') {
+        if (e.shiftKey && document.activeElement === first) { last.focus(); e.preventDefault(); }
+        else if (!e.shiftKey && document.activeElement === last) { first.focus(); e.preventDefault(); }
+      }
+      if (e.key === 'Escape') { close(); }
+    }
+    function open() {
+      lastFocus = document.activeElement;
+      modal.hidden = false;
+      modal.setAttribute('aria-hidden','false');
+      document.addEventListener('keydown', trapFocus);
+      content.focus();
+    }
+    function close() {
+      modal.hidden = true;
+      modal.setAttribute('aria-hidden','true');
+      document.removeEventListener('keydown', trapFocus);
+      lastFocus && lastFocus.focus();
+    }
+    openBtn.addEventListener('click', open);
+    closeBtn.addEventListener('click', close);
+
+    // Carousel controls with pause/play
+    const track = document.querySelector('.track');
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    let idx = 0, timer = null, playing = true;
+    function show(i){ idx=(i+slides.length)%slides.length; track.style.transform = `translateX(-${idx*100}%)`; }
+    function play(){ timer = setInterval(()=>show(idx+1), 4000); playing=true; document.getElementById('toggle').textContent='Pause'; }
+    function pause(){ clearInterval(timer); playing=false; document.getElementById('toggle').textContent='Play'; }
+    document.getElementById('prev').onclick = ()=>{ pause(); show(idx-1); };
+    document.getElementById('next').onclick = ()=>{ pause(); show(idx+1); };
+    document.getElementById('toggle').onclick = ()=> playing ? pause() : play();
+    play();
+  </script>
+</body>
+</html>

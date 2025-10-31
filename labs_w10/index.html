@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Accessibility issue: zoom disabled -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <title>Broken Accessibility Demo</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Accessibility issue: starts at h3, skips h1/h2 -->
+  <h3>Welcome to Our Site</h3>
+
+  <!-- Low contrast text -->
+  <p class="muted">This paragraph uses very low contrast text on a light background.</p>
+
+  <!-- Non-semantic control: div used as button, no role, no keyboard -->
+  <div class="cta">Get Started</div>
+
+  <!-- Color-only meaning + vague link text -->
+  <p>Status: <span class="status status-ok">OK</span> (if red it means error)</p>
+  <p><a href="#signup" class="vague-link">Click here</a> to learn more.</p>
+
+  <!-- Image missing alt -->
+  <img src="https://picsum.photos/300/120" class="hero-image">
+
+  <!-- Tiny targets in nav -->
+  <nav class="tiny-nav">
+    <a href="#home">Home</a>
+    <a href="#features">Features</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <!-- Form without labels, placeholders only -->
+  <form id="signup" class="signup">
+    <input type="text" placeholder="Email">
+    <input type="text" placeholder="Phone">
+    <input type="text" placeholder="Password">
+    <!-- Bad error message -->
+    <div class="error">Invalid</div>
+    <!-- Submit is a span, not a button -->
+    <span class="submit-like">Submit</span>
+  </form>
+
+  <!-- Keyboard trap modal trigger -->
+  <button id="openModal">Open Modal</button>
+
+  <div id="modal" aria-hidden="true" class="modal" hidden>
+    <div class="modal-content" tabindex="-1">
+      <h4>Modal Title</h4>
+      <p>Try to tab out of this modal. You can't.</p>
+      <!-- Close is a div with no semantics -->
+      <div id="closeModal" class="close-x">✕</div>
+      <a href="#nowhere">Another link</a>
+      <input type="text" placeholder="Type here">
+    </div>
+  </div>
+
+  <!-- Focus outline disabled globally -->
+  <div class="cards">
+    <a href="#c1" class="card">Card 1</a>
+    <a href="#c2" class="card">Card 2</a>
+    <a href="#c3" class="card">Card 3</a>
+  </div>
+
+  <!-- Auto-advancing carousel without controls (simplified) -->
+  <div class="carousel" aria-label="Promo carousel">
+    <div class="slide">Slide 1 – Big Sale!</div>
+    <div class="slide">Slide 2 – New Arrivals!</div>
+    <div class="slide">Slide 3 – Limited Offer!</div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

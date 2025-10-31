@@ -1,0 +1,23 @@
+body { font-family: Arial, sans-serif; margin: 0; padding: 16px; background:#fff; color:#111; }
+a { color:#0645ad; }
+a:focus, button:focus, input:focus { outline: 3px solid #1a73e8; outline-offset: 2px; }
+.show-focus a:focus, .show-focus button:focus, .show-focus input:focus { outline: 3px solid #1a73e8; }
+
+.muted { color:#333; } /* fixed contrast */
+
+.cta { display:inline-block; background:#0a66c2; color:#fff; padding:10px 14px; border-radius:6px; border:0; cursor:pointer; font-size:16px; }
+
+.status-ok { color:#0a0; }
+.descriptive-link { text-decoration: underline; }
+
+.roomy-nav a { display:inline-block; font-size:16px; padding:10px 12px; margin-right:8px; border:1px solid #ccc; border-radius:6px; }
+
+.signup { margin-top:16px; display:flex; flex-direction:column; width:320px; gap:10px; }
+.signup input { padding:10px; font-size:16px; }
+
+.modal { position:fixed; inset:0; background:rgba(0,0,0,0.4); display:flex; align-items:center; justify-content:center; }
+.modal-content { position:relative; background:#fff; padding:16px; width:320px; border-radius:6px; }
+
+.carousel { margin-top:24px; overflow:hidden; border:1px solid #ddd; }
+.carousel .track { display:flex; transition: transform 300ms ease; }
+.slide { min-width:100%; padding:12px; color:#111; }

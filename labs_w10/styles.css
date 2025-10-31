@@ -1,0 +1,38 @@
+/* Intentionally broken styles for teaching */
+body { font-family: Arial, sans-serif; margin: 0; padding: 16px; background:#fff; color:#111; }
+
+/* Low contrast text */
+.muted { color:#bfbfbf; } /* on white => ~1.5:1 */
+
+.cta { display:inline-block; background:#ddd; color:#777; padding:6px 10px; border-radius:4px; cursor:pointer; }
+
+.status { font-weight:bold; }
+.status-ok { color: green; } /* color-only meaning */
+
+.vague-link { color:#7a7a7a; text-decoration:none; } /* low contrast + no underline */
+
+/* Tiny tap targets */
+.tiny-nav a { display:inline-block; font-size:12px; padding:2px; margin-right:4px; border:1px solid #ccc; }
+
+/* Form */
+.signup { margin-top:16px; display:flex; flex-direction:column; width:280px; gap:8px; }
+.signup input { padding:6px; font-size:14px; }
+.error { color:#a00; font-size:12px; }
+.submit-like { display:inline-block; padding:6px 10px; background:#ccc; color:#444; cursor:pointer; }
+
+/* Remove all focus outlines (bad) */
+:focus { outline: none !important; box-shadow:none !important; }
+
+.cards { display:flex; gap:8px; margin:16px 0; }
+.card { display:block; width:120px; height:80px; background:#eee; color:#666; padding:8px; text-decoration:none; }
+
+/* Modal (no proper focus trap, no background inert) */
+.modal { position:fixed; inset:0; background:rgba(0,0,0,0.4); display:flex; align-items:center; justify-content:center; }
+.modal-content { background:#fff; padding:16px; width:300px; border-radius:6px; }
+.close-x { position:absolute; top:10px; right:14px; cursor:pointer; color:#888; }
+
+/* Carousel auto-advance; no controls */
+.carousel { margin-top:24px; height:60px; overflow:hidden; border:1px solid #ddd; display:flex; align-items:center; }
+.slide { min-width:100%; padding:8px; color:#333; }
+
+.hero-image { display:block; margin:12px 0; width:300px; height:120px; object-fit:cover; }

@@ -1,0 +1,20 @@
+{
+  "color": {
+    "primary": "#1976d2",
+    "secondary": "#9c27b0",
+    "textPrimary": "#212121"
+  },
+  "typography": {
+    "h1": {
+      "fontSize": 32,
+      "fontWeight": 700
+    },
+    "body": {
+      "fontSize": 16,
+      "fontWeight": 400
+    }
+  },
+  "spacing": {
+    "base": 4
+  }
+}
