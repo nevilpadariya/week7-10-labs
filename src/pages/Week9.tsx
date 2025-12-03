@@ -1,119 +1,82 @@
+import { useState } from "react";
 import {
   Box,
   Container,
   Typography,
   Paper,
-  Divider,
-  Button,
+  Tabs,
+  Tab,
 } from "@mui/material";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
-import tokensBefore from "../../labs_w9/tokens_before.json";
-import tokensAfter from "../../labs_w9/tokens_after.json";
-import { useState } from "react";
+import AccessibleDemo from "../components/week9/AccessibleDemo";
+import InaccessibleDemo from "../components/week9/InaccessibleDemo";
+import tokensBefore from "../components/week9/tokens_before.json";
+import tokensAfter from "../components/week9/tokens_after.json";
 
-// Theme with accessible tokens
-const accessibleTheme = createTheme({
-  palette: {
-    primary: { main: tokensAfter.color.primary },
-    secondary: { main: tokensAfter.color.secondary },
-    text: { primary: tokensAfter.color.textPrimary },
-  },
-  typography: {
-    h1: {
-      fontSize: tokensAfter.typography.h1.fontSize,
-      fontWeight: tokensAfter.typography.h1.fontWeight,
-    },
-    body1: {
-      fontSize: tokensAfter.typography.body.fontSize,
-      fontWeight: tokensAfter.typography.body.fontWeight,
-    },
-  },
-  spacing: tokensAfter.spacing.base,
-});
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: number;
+  value: number;
+}
 
-// Theme with inaccessible tokens
-const inaccessibleTheme = createTheme({
-  palette: {
-    primary: { main: tokensBefore.color.primary },
-    secondary: { main: tokensBefore.color.secondary },
-    text: { primary: tokensBefore.color.textPrimary },
-  },
-  typography: {
-    h1: {
-      fontSize: tokensBefore.typography.h1.fontSize,
-      fontWeight: tokensBefore.typography.h1.fontWeight,
-    },
-    body1: {
-      fontSize: tokensBefore.typography.body.fontSize,
-      fontWeight: tokensBefore.typography.body.fontWeight,
-    },
-  },
-  spacing: tokensBefore.spacing.base,
-});
+function TabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props;
 
-function AccessibleDemo() {
   return (
-    <ThemeProvider theme={accessibleTheme}>
-      <CssBaseline />
-      <Box sx={{ p: 3, display: "grid", gap: 2 }}>
-        <Typography variant="h4">Accessible Design Tokens</Typography>
-        <Button variant="contained" color="primary">Primary Button</Button>
-        <Button variant="outlined" color="secondary">Secondary Button</Button>
-        <Typography>
-          This theme uses accessible color tokens that meet WCAG AA contrast requirements.
-        </Typography>
-      </Box>
-    </ThemeProvider>
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`week9-tabpanel-${index}`}
+      aria-labelledby={`week9-tab-${index}`}
+      {...other}
+    >
+      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+    </div>
   );
 }
 
-function InaccessibleDemo() {
-  return (
-    <ThemeProvider theme={inaccessibleTheme}>
-      <CssBaseline />
-      <Box sx={{ p: 3, display: "grid", gap: 2, bgcolor: "background.default" }}>
-        <Typography variant="h4">Inaccessible Design Tokens (Before)</Typography>
-        <Button variant="contained" color="primary">Primary Button</Button>
-        <Button variant="outlined" color="secondary">Secondary Button</Button>
-        <Typography>
-          This theme uses low-contrast tokens that fail WCAG AA contrast requirements.
-        </Typography>
-      </Box>
-    </ThemeProvider>
-  );
-}
-
-// Week 9 Page Component
 export default function Week9() {
-  const [showBefore, setShowBefore] = useState(false);
+  const [value, setValue] = useState(0);
+
+  const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
+    setValue(newValue);
+  };
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
       <Typography variant="h3" component="h1" gutterBottom sx={{ fontWeight: 600, mb: 4 }}>
-        Week 9 Labs - Figma → Tokens & Accessibility
+        Week 9 Labs
       </Typography>
 
-      <Box sx={{ display: "grid", gap: 4 }}>
-        <Paper elevation={2} sx={{ p: 3 }}>
-          <Typography variant="h5" component="h2" gutterBottom sx={{ mb: 2, fontWeight: 500 }}>
-            Lab: Design Tokens & Accessibility
-          </Typography>
-          <Divider sx={{ mb: 3 }} />
-          <Box sx={{ display: "grid", gap: 3 }}>
-            <Box>
-              <Button
-                variant="outlined"
-                onClick={() => setShowBefore(!showBefore)}
-                sx={{ mb: 2 }}
-              >
-                {showBefore ? "Show Accessible Tokens" : "Show Inaccessible Tokens (Before)"}
-              </Button>
-            </Box>
-            {showBefore ? <InaccessibleDemo /> : <AccessibleDemo />}
-            
-            <Box sx={{ mt: 3, display: "grid", gap: 2 }}>
-              <Typography variant="h6">Tokens Comparison</Typography>
+      <Paper elevation={3}>
+        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+          <Tabs 
+            value={value} 
+            onChange={handleChange} 
+            variant="scrollable" 
+            scrollButtons="auto"
+            aria-label="Week 9 Labs Tabs"
+          >
+            <Tab label="Design Tokens Demo" />
+            <Tab label="Tokens Comparison" />
+          </Tabs>
+        </Box>
+
+        <TabPanel value={value} index={0}>
+          <Box sx={{ display: "grid", gap: 4 }}>
+             <Box>
+                <Typography variant="h6" gutterBottom>Before (Inaccessible)</Typography>
+                <InaccessibleDemo />
+             </Box>
+             <Box>
+                <Typography variant="h6" gutterBottom>After (Accessible)</Typography>
+                <AccessibleDemo />
+             </Box>
+          </Box>
+        </TabPanel>
+
+        <TabPanel value={value} index={1}>
+            <Box sx={{ display: "grid", gap: 2 }}>
+              <Typography variant="h6">Tokens JSON Comparison</Typography>
               <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" }, gap: 2 }}>
                 <Paper sx={{ p: 2, bgcolor: "grey.100" }}>
                   <Typography variant="subtitle2" gutterBottom fontWeight={600}>
@@ -132,7 +95,6 @@ export default function Week9() {
                   </Typography>
                 </Paper>
               </Box>
-            </Box>
 
             <Box sx={{ mt: 2 }}>
               <Typography variant="h6" gutterBottom>Key Changes:</Typography>
@@ -152,9 +114,8 @@ export default function Week9() {
               </Typography>
             </Box>
           </Box>
-        </Paper>
-      </Box>
+        </TabPanel>
+      </Paper>
     </Container>
   );
 }
-

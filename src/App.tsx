@@ -7,6 +7,8 @@ import Week8 from "./pages/Week8";
 import Week9 from "./pages/Week9";
 import Week10 from "./pages/Week10";
 import Week11 from "./pages/Week11";
+import Week13 from "./pages/Week13";
+import Week14 from "./pages/Week14";
 
 const theme = createTheme({
   palette: {
@@ -30,6 +32,8 @@ function App() {
           <Route path="/week9" element={<Week9 />} />
           <Route path="/week10" element={<Week10 />} />
           <Route path="/week11" element={<Week11 />} />
+          <Route path="/week13" element={<Week13 />} />
+          <Route path="/week14" element={<Week14 />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>

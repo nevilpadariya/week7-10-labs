@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 
 export default function Navbar() {
   const location = useLocation();
-  const weeks = [7, 8, 9, 10, 11];
+  const weeks = [7, 8, 9, 10, 11, 13, 14];
 
   return (
     <AppBar position="static" elevation={2}>
